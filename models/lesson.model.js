@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 
 const lessonSchema = new Schema({
-    name:{
+    name: {
         type: String,
         required: true
     },
-    count:{
+    count: {
         type: Number,
         required: true
     },
