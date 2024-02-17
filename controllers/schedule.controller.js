@@ -19,8 +19,23 @@ class ScheduleController {
             const newSchedule = {
                 ...req.body
             }
+            await Schedule.findOneAndDelete({dayName: req.body.dayName})
             const created = await Schedule.create(newSchedule)
             res.status(201).json(created)
+        } catch (err) {
+            res.status(500).json(err.message)
+        }
+    }
+
+    async edit(req, res) {
+        try {
+            const newSchedule = {
+                ...req.body
+            }
+            await Schedule.findOneAndUpdate({dayName: req.body.dayName}, newSchedule)
+            res.status(201).json({
+                msg: "edited"
+            })
         } catch (err) {
             res.status(500).json(err.message)
         }
@@ -70,19 +85,19 @@ class ScheduleController {
                 })
             }
 
-            const ready = []
+            const calendar = []
             for (let i = 0; i < arr.length; i+=7) {
-                ready.push(arr.slice(i, i + 7))
+                calendar.push(arr.slice(i, i + 7))
             }
 
-            for (let i = 0; i < ready.length; i++) {
+            for (let i = 0; i < calendar.length; i++) {
                 for (let j = 0; j < schedule.length; j++) {
-                    ready[i][j].lessons.push(schedule[j])
+                    calendar[i][j].lessons.push(schedule[j])
                 }
             }
 
             res.status(200).json({
-                ready
+                calendar
             })
         } catch (err) {
             res.status(500).json(err.message)
