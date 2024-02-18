@@ -43,8 +43,7 @@ class ScheduleController {
 
     async generateSchedule(req, res) {
         try {
-            const body = req.body
-            const date = new Date(new Date().getFullYear(), body.month, 1)
+            const date = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
 
             const startAndEndMonth = {
                 first: date.getDay(),
@@ -95,7 +94,7 @@ class ScheduleController {
                     calendar[i][j].lessons.push(schedule[j])
                 }
             }
-
+            console.log(1)
             res.status(200).json({
                 calendar
             })

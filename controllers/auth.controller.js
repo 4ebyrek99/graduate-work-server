@@ -18,7 +18,7 @@ class AuthController {
             const token = genToken(foundUser.username, foundUser.role)
             res.status(200).json({
                 token,
-                username: foundUser.username
+                userId: foundUser._id
             })
         } catch (err) {
             res.status(500).json(err)
