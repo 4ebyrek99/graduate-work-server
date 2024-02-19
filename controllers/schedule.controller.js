@@ -94,7 +94,6 @@ class ScheduleController {
                     calendar[i][j].lessons.push(schedule[j])
                 }
             }
-            console.log(1)
             res.status(200).json({
                 calendar
             })

@@ -2,13 +2,25 @@ import User from "../models/user.model.js"
 import {hashSync} from "bcrypt";
 
 class userController {
-    async getAll(request, response) {
+
+    async getUserById(req, res){
+
+        const { id } = req.body
+
+        try {
+            const user = await User.findById(id)
+            res.status(200).json(user)
+        } catch (err) {
+            res.status(500).json(err)
+        }
+    }
+    async getAll(req, res) {
         try {
             const users = await User.find();
 
-            response.status(200).json(users);
+            res.status(200).json(users);
         } catch (err) {
-            response.status(500).json(err);
+            res.status(500).json(err)
         }
     }
 
