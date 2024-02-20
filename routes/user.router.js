@@ -6,6 +6,6 @@ const userRouter = new Router()
 
 userRouter.get("/get-all", verifyToken, userController.getAll)
 userRouter.post("/register", userController.register)
-userRouter.post("/get-by-id", userController.getUserById)
+userRouter.post("/get-user-info", userController.getUserInfo)
 
 export default userRouter

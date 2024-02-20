@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken'
 import User from '../models/user.model.js'
 import { compareSync } from 'bcrypt'
 
-const genToken = (username, role) => {
-    const payload = { username, role};
+const genToken = (username, id) => {
+    const payload = { username, id }
     return jwt.sign(payload, 'secretKey', { expiresIn: "12h" } )
 }
 
@@ -21,7 +21,7 @@ class AuthController {
                 success: false,
                 msg: "Введен неверный пароль"
             })
-            const token = genToken(foundUser.username, foundUser.role)
+            const token = genToken(foundUser.username, foundUser._id)
 
             res.status(200).json({
                 success: true,

@@ -1,19 +1,33 @@
 import User from "../models/user.model.js"
 import {hashSync} from "bcrypt";
+import jwt from "jsonwebtoken";
 
 class userController {
 
-    async getUserById(req, res){
-
-        const { id } = req.body
-
+    async getUserInfo (req, res) {
         try {
-            const user = await User.findById(id)
-            res.status(200).json(user)
+            const token = req.headers.authorization
+            if(!token) {
+                res.status(403).json({
+                    success: false,
+                    msg: "Не авторизован"
+                })
+            }
+            const { id } = jwt.verify(token, "secretKey")
+
+            const user = await User.findById({_id: id})
+            res.status(200).json({
+                firstName: user.firstName,
+                lastName: user.lastName
+            })
         } catch (err) {
-            res.status(500).json(err)
+            res.status(403).json({
+                success: false,
+                msg: "Не авторизован"
+            })
         }
     }
+
     async getAll(req, res) {
         try {
             const users = await User.find();
@@ -29,7 +43,10 @@ class userController {
             const { username, password } = req.body
             const userAllreadyCreated = await User.findOne({ username })
 
-            if (userAllreadyCreated) return res.status(400).json({ msg: "Уже существует" })
+            if (userAllreadyCreated) return res.status(400).json({
+                success: false,
+                msg: "Уже существует" }
+            )
 
             const newUser = {
                 ...req.body,
