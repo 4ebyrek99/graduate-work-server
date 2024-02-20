@@ -2,44 +2,29 @@ import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 
 const scheduleSchema = new Schema({
-    dayName: {
+    groupName: {
         type: String,
         required: true
     },
-    lessonType: {
-        type: String,
-        required: true,
-        default: "offline"
-    },
-    lessons: [
+    schedule: [
         {
-            lessonName: {
+            id: {
                 type: String,
-                default: "-"
+                required: true
             },
-            timeStart: {
-                type: String,
-                default: "-"
+            events: {
+                type: Array,
+                default: [],
+                required: false
             },
-            timeEnd: {
+            type: {
                 type: String,
-                default: "-"
+                required: true
             },
-            classroom: {
-                type: String,
-                default: "-"
-            },
-            zoomId: {
-                type: String,
-                default: "-"
-            },
-            zoomPass: {
-                type: String,
-                default: "-"
-            },
-            teacher: {
-                type: String,
-                default: "-"
+            lessons: {
+                type: Array,
+                default: [],
+                required: true
             }
         }
     ]

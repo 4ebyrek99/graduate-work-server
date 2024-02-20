@@ -26,7 +26,7 @@ class AuthController {
             res.status(200).json({
                 success: true,
                 token,
-                userId: foundUser._id
+                groupName: foundUser.groupName
             })
         } catch (err) {
             res.status(500).json(err)

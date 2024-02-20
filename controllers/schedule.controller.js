@@ -19,7 +19,6 @@ class ScheduleController {
             const newSchedule = {
                 ...req.body
             }
-            await Schedule.findOneAndDelete({dayName: req.body.dayName})
             const created = await Schedule.create(newSchedule)
             res.status(201).json(created)
         } catch (err) {
@@ -41,8 +40,11 @@ class ScheduleController {
         }
     }
 
-    async generateSchedule(req, res) {
+    async genSchedule(req, res) {
+
         try {
+            const groupName = req.body.groupName
+
             const date = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
 
             const startAndEndMonth = {
@@ -58,7 +60,7 @@ class ScheduleController {
                 dayCountNextMonth: 7 - startAndEndMonth.last === 7 ? 0 : 7 - startAndEndMonth.last
             }
 
-            const schedule = await Schedule.find()
+            const groupSchedule = await Schedule.findOne({groupName})
             const arr = []
             for (let i = info.prevMonth - info.dayCountPrevMonth; i < info.prevMonth; i++) {
                 arr.push({
@@ -85,20 +87,21 @@ class ScheduleController {
             }
 
             const calendar = []
+
             for (let i = 0; i < arr.length; i+=7) {
                 calendar.push(arr.slice(i, i + 7))
             }
 
             for (let i = 0; i < calendar.length; i++) {
-                for (let j = 0; j < schedule.length; j++) {
-                    calendar[i][j].lessons.push(schedule[j])
+                for (let j = 0; j <= 6; j++) {
+                    calendar[i][j].lessons.push(...groupSchedule.schedule[j].lessons)
                 }
             }
-            res.status(200).json({
-                calendar
-            })
+
+            res.json(calendar)
+
         } catch (err) {
-            res.status(500).json(err.message)
+            res.json(err)
         }
     }
 }

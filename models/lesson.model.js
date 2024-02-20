@@ -2,12 +2,13 @@ import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 
 const lessonSchema = new Schema({
-    name: {
+    groupName: {
         type: String,
         required: true
     },
-    count: {
-        type: Number,
+    lessons: {
+        type: Array,
+        default: [],
         required: true
     },
 })

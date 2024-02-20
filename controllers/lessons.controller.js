@@ -12,10 +12,10 @@ class LessonsController {
 
     async add(req, res) {
         try {
-            const newLesson = {
+            const newLessons = {
                 ...req.body
             }
-            const created = await Lesson.create(newLesson)
+            const created = await Lesson.create(newLessons)
             res.status(201).json(created)
         } catch (err) {
             res.status(500).json(err.message)

@@ -10,6 +10,10 @@ const userSchema = new Schema({
         minLength: 6,
         unique: true
     },
+    groupName: {
+        type: String,
+        required: true
+    },
     firstName: {
         type: String,
         required: true,
