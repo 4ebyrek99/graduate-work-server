@@ -5,10 +5,10 @@ Date.prototype.daysInMonth = function(month) {
 }
 
 class ScheduleController {
-    async getAll(req, res) {
+    async getSchedule(req, res) {
         try {
             const schedule = await Schedule.find()
-            res.status(200).json(schedule)
+            res.status(200).json(...schedule)
         } catch (err) {
             res.status(500).json(err.message)
         }

@@ -21,7 +21,7 @@ class userController {
                 lastName: user.lastName
             })
         } catch (err) {
-            res.status(403).json({
+            res.status(200).json({
                 success: false,
                 msg: "Не авторизован"
             })
