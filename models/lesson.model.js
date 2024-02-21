@@ -14,11 +14,13 @@ const lessonSchema = new Schema({
             },
             timeStart: {
                 type: String,
-                required: true
+                required: false,
+                default: ""
             },
             timeEnd: {
                 type: String,
-                required: true
+                required: false,
+                default: ""
             },
             zoomId: {
                 type: String,

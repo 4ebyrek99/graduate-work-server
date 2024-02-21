@@ -26,18 +26,29 @@ class ScheduleController {
         }
     }
 
-    async edit(req, res) {
+    async editDay(req, res) {
         try {
-            const newSchedule = {
-                ...req.body
-            }
-            await Schedule.findOneAndUpdate({dayName: req.body.dayName}, newSchedule)
-            res.status(201).json({
-                msg: "edited"
+            const editedDay = req.body.day
+            console.log(editedDay.id)
+            await Schedule.findOneAndUpdate({ schedule: { $elemMatch: { id: editedDay.id } } }, editedDay)
+            const edited = await Schedule.find({ schedule: { $elemMatch: { id: editedDay.id } } })
+            res.json({
+                edited
             })
         } catch (err) {
-            res.status(500).json(err.message)
+            res.json(err)
         }
+        // try {
+        //     const newSchedule = {
+        //         ...req.body
+        //     }
+        //     await Schedule.findOneAndUpdate({dayName: req.body.dayName}, newSchedule)
+        //     res.status(201).json({
+        //         msg: "edited"
+        //     })
+        // } catch (err) {
+        //     res.status(500).json(err.message)
+        // }
     }
 
     async genSchedule(req, res) {
