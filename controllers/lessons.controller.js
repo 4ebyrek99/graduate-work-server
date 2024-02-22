@@ -1,9 +1,10 @@
 import Lesson from '../models/lesson.model.js'
 
 class LessonsController {
-    async getAll(req, res) {
+    async getLessons(req, res) {
         try {
-            const lessons = await Lesson.find()
+            const groupName = req.body.groupName
+            const lessons = await Lesson.findOne({ groupName: groupName })
             res.status(200).json(lessons)
         } catch (err) {
             res.status(500).json(err.message)
