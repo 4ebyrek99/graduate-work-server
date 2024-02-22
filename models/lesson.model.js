@@ -15,12 +15,12 @@ const lessonSchema = new Schema({
             timeStart: {
                 type: String,
                 required: false,
-                default: ""
+                default: "00:00"
             },
             timeEnd: {
                 type: String,
                 required: false,
-                default: ""
+                default: "00:00"
             },
             zoomId: {
                 type: String,
