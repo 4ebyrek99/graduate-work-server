@@ -17,6 +17,7 @@ class userController {
 
             const user = await User.findById({_id: id})
             res.status(200).json({
+                success: true,
                 firstName: user.firstName,
                 lastName: user.lastName
             })
