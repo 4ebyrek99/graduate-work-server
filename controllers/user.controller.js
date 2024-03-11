@@ -19,7 +19,8 @@ class userController {
             res.status(200).json({
                 success: true,
                 firstName: user.firstName,
-                lastName: user.lastName
+                lastName: user.lastName,
+                groupName: user.groupName
             })
         } catch (err) {
             res.status(200).json({

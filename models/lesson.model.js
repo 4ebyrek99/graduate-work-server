@@ -6,36 +6,10 @@ const lessonSchema = new Schema({
         type: String,
         required: true
     },
-    lessons: [
-        {
-            lessonName: {
-                type: String,
-                required: true
-            },
-            timeStart: {
-                type: String,
-                required: false,
-                default: "00:00"
-            },
-            timeEnd: {
-                type: String,
-                required: false,
-                default: "00:00"
-            },
-            zoomId: {
-                type: String,
-                required: false
-            },
-            zoomPassword: {
-                type: String,
-                required: false
-            },
-            teacher: {
-                type: String,
-                required: false
-            }
-        }
-    ],
+    lessons: {
+        type: Array,
+        required: true
+    },
 })
 
 export default mongoose.model("Lesson", lessonSchema)
