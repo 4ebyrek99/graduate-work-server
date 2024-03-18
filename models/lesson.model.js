@@ -6,10 +6,14 @@ const lessonSchema = new Schema({
         type: String,
         required: true
     },
-    lessons: {
+    activeLessons: {
         type: Array,
         required: true
     },
+    notActiveLessons: {
+        type: Array,
+        required: false
+    }
 })
 
 export default mongoose.model("Lesson", lessonSchema)
