@@ -14,12 +14,13 @@ class AuthController {
             const foundUser= await User.findOne({username})
             if (!foundUser) return res.status(200).json({
                 success: false,
-                msg: `${username} не найден`
+                msg: "Пользователь не найден!"
             })
+
             const passwordVerify = compareSync(password, foundUser.password)
             if (!passwordVerify) return res.status(200).json({
                 success: false,
-                msg: "Введен неверный пароль"
+                msg: "Введен неверный пароль!"
             })
             const token = genToken(foundUser.username, foundUser._id)
 
