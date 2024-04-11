@@ -11,7 +11,7 @@ class LessonsController {
         }
     }
 
-    async add(req, res) {
+    async addGroupLessons(req, res) {
         try {
             const newLessons = {
                 ...req.body
@@ -20,6 +20,33 @@ class LessonsController {
             res.status(201).json(created)
         } catch (err) {
             res.status(500).json(err.message)
+        }
+    }
+
+    async updateGroupLessons(req, res) {
+
+        try {
+            const data = req.body
+
+            await Lesson.findOneAndUpdate(
+                {groupName: data.groupName, "schedule.id": editedDay.id },
+                {
+                    $set: {
+                        "schedule.$.events": editedDay.events,
+                        "schedule.$.type": editedDay.type,
+                        "schedule.$.lessons": editedDay.lessons,
+                    }
+                }
+            )
+            res.json({
+                success: true,
+                msg: "День обновлен"
+            })
+        } catch (err) {
+            res.json({
+                success: false,
+                msg: "Ошибка обновления"
+            })
         }
     }
 }

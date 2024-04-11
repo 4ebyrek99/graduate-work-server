@@ -29,10 +29,11 @@ class ScheduleController {
     async editDay(req, res) {
         try {
             const editedDay = req.body.day
+            const groupName = req.body.groupName
             delete editedDay._id
 
             await Schedule.findOneAndUpdate(
-                {groupName: "A1", "schedule.id": editedDay.id },
+                {groupName: groupName, "schedule.id": editedDay.id },
                 {
                     $set: {
                         "schedule.$.events": editedDay.events,
@@ -48,7 +49,7 @@ class ScheduleController {
         } catch (err) {
             res.json({
                 success: false,
-                err
+                msg: "Ошибка обновления"
             })
         }
     }
