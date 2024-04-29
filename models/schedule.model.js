@@ -29,6 +29,11 @@ const scheduleSchema = new Schema({
                 type: Array,
                 default: [],
                 required: true
+            },
+            room: {
+                type: String,
+                default: "",
+                required: true
             }
         }
     ]

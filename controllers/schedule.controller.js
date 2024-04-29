@@ -68,17 +68,27 @@ class ScheduleController {
 
             const info = {
                 prevMonth: date.daysInMonth(date.getMonth() - 1),
+                prevMonthId: date.getMonth() - 1,
                 month: date.daysInMonth(date.getMonth()),
+                monthId: date.getMonth(),
                 nextMonth: date.daysInMonth(date.getMonth() + 1),
+                nextMonthId: date.getMonth() + 1,
                 dayCountPrevMonth: date.daysInMonth(date.getMonth()) - (date.daysInMonth(date.getMonth()) - date.getDay()) - 1,
                 dayCountNextMonth: 7 - startAndEndMonth.last === 7 ? 0 : 7 - startAndEndMonth.last
             }
 
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+
             const groupSchedule = await Schedule.findOne({groupName})
             const arr = []
+
             for (let i = info.prevMonth - info.dayCountPrevMonth; i < info.prevMonth; i++) {
                 arr.push({
-                    month: "prev",
+                    monthId: "prev",
+                    month: monthNames[info.prevMonthId],
                     number: i + 1,
                     lessons: []
                 })
@@ -86,7 +96,8 @@ class ScheduleController {
 
             for (let i = 1; i < info.month + 1; i++) {
                 arr.push({
-                    month: "current",
+                    monthId: "current",
+                    month: monthNames[info.monthId],
                     number: i,
                     lessons: []
                 })
@@ -94,7 +105,8 @@ class ScheduleController {
 
             for (let i = 1; i < info.dayCountNextMonth + 1; i++) {
                 arr.push({
-                    month: "next",
+                    monthId: "next",
+                    month: monthNames[info.nextMonthId],
                     number: i,
                     lessons: []
                 })
@@ -109,6 +121,8 @@ class ScheduleController {
             for (let i = 0; i < calendar.length; i++) {
                 for (let j = 0; j <= 6; j++) {
                     calendar[i][j].lessons.push(...groupSchedule.schedule[j].lessons)
+                    calendar[i][j].dayId = groupSchedule.schedule[j].id
+                    calendar[i][j].type = groupSchedule.schedule[j].type
                 }
             }
 
