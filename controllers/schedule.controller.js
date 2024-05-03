@@ -77,18 +77,13 @@ class ScheduleController {
                 dayCountNextMonth: 7 - startAndEndMonth.last === 7 ? 0 : 7 - startAndEndMonth.last
             }
 
-            const monthNames = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ];
-
             const groupSchedule = await Schedule.findOne({groupName})
             const arr = []
 
             for (let i = info.prevMonth - info.dayCountPrevMonth; i < info.prevMonth; i++) {
                 arr.push({
                     monthId: "prev",
-                    month: monthNames[info.prevMonthId],
+                    month: info.prevMonthId,
                     number: i + 1,
                     lessons: []
                 })
@@ -97,7 +92,7 @@ class ScheduleController {
             for (let i = 1; i < info.month + 1; i++) {
                 arr.push({
                     monthId: "current",
-                    month: monthNames[info.monthId],
+                    month: info.monthId,
                     number: i,
                     lessons: []
                 })
@@ -106,7 +101,7 @@ class ScheduleController {
             for (let i = 1; i < info.dayCountNextMonth + 1; i++) {
                 arr.push({
                     monthId: "next",
-                    month: monthNames[info.nextMonthId],
+                    month: info.nextMonthId,
                     number: i,
                     lessons: []
                 })
@@ -122,6 +117,7 @@ class ScheduleController {
                 for (let j = 0; j <= 6; j++) {
                     calendar[i][j].lessons.push(...groupSchedule.schedule[j].lessons)
                     calendar[i][j].dayId = groupSchedule.schedule[j].id
+                    calendar[i][j].dayName = groupSchedule.schedule[j].dayName
                     calendar[i][j].type = groupSchedule.schedule[j].type
                 }
             }
